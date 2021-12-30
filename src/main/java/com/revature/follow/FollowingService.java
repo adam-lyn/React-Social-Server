@@ -36,8 +36,9 @@ public class FollowingService {
             if (followUser == null) {
                 return false; //TODO: change to exception (Enter invalid followUser)
             }
-            followingList.add(currentUser);
-            userRepository.save(followUser);
+            //followingList.add(currentUser);
+
+            followRepository.save(followUser);
             return true;
         } catch (Exception e) {
             e.printStackTrace(); //TODO: "probably connection error"
