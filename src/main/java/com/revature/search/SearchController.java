@@ -2,9 +2,12 @@ package com.revature.search;
 
 import com.revature.search.dtos.SearchRequest;
 import com.revature.search.dtos.SearchResponse;
+import com.revature.users.profiles.Profile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/search")
@@ -19,9 +22,9 @@ public class SearchController {
 
     @GetMapping
     public SearchResponse getUsersByString(@RequestParam(name = "query", required = true) String searchInput) {
+        List<Profile> profiles = searchService.getUsersBySearch(searchInput);
 
-        // SearchService validates input and submits search
-        // We get whatever the service returns - should be a list
-        // return that to the user as SearchResponse
+        return new SearchResponse(profiles);
+
     }
 }
