@@ -1,10 +1,12 @@
 package com.revature.search.dtos;
 
 import com.revature.users.profiles.Profile;
+import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 public class SearchResponse {
 
     private final List<ProfileSearchResponse> responses;
@@ -19,6 +21,7 @@ public class SearchResponse {
         }
     }
 
+    @Data
     static class ProfileSearchResponse {
         private final String firstName;
         private final String lastName;
