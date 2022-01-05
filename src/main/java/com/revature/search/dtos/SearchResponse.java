@@ -15,8 +15,8 @@ public class SearchResponse {
         this.responses = new ArrayList<ProfileSearchResponse>();
         for (Profile profile : profiles) {
             ProfileSearchResponse resp =
-                    new ProfileSearchResponse(profile.getFirst_name(),
-                            profile.getLast_name());
+                    new ProfileSearchResponse(profile.getFirstName(),
+                            profile.getLastName());
             this.responses.add(resp);
         }
     }
