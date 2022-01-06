@@ -1,34 +1,36 @@
 package com.revature.search.dtos;
 
+import com.revature.users.User;
 import com.revature.users.profiles.Profile;
 import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 public class SearchResponse {
 
-    private final List<ProfileSearchResponse> responses;
+    private final List<UserSearchResponse> responses;
 
-    public SearchResponse(List<Profile> profiles) {
-        this.responses = new ArrayList<ProfileSearchResponse>();
-        for (Profile profile : profiles) {
-            ProfileSearchResponse resp =
-                    new ProfileSearchResponse(profile.getFirstName(),
-                            profile.getLastName());
+    public SearchResponse(List<User> users) {
+        this.responses = new ArrayList<UserSearchResponse>();
+        for (User user : users) {
+            UserSearchResponse resp =
+                    new UserSearchResponse(user.getEmail(),
+                            user.getId());
             this.responses.add(resp);
         }
     }
 
     @Data
-    static class ProfileSearchResponse {
-        private final String firstName;
-        private final String lastName;
+    public static class UserSearchResponse {
+        private final String email;
+        private final String id;
 
-        public ProfileSearchResponse(String firstName, String lastName) {
-            this.firstName = firstName;
-            this.lastName = lastName;
+        public UserSearchResponse(String email, String id) {
+            this.email = email;
+            this.id = id;
         }
     }
 }

@@ -12,19 +12,19 @@ import java.util.List;
 @Service
 public class SearchService {
 
-    private final ProfileRepository profileRepository;
+    private final UserRepository userRepository;
 //    private final GroupRepository groupRepository;
 
     @Autowired
-    public SearchService(ProfileRepository profileRepository) {
-        this.profileRepository = profileRepository;
+    public SearchService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     public String formatString(String string) {
         return string.trim().toUpperCase();
     }
 
-    public List<Profile> getUsersBySearch(String string) {
-        return profileRepository.findByFirstNameIgnoreCaseContaining(formatString(string));
+    public List<User> getUsersBySearch(String string) {
+        return userRepository.findByEmailStartingWith(formatString(string));
     }
 }
