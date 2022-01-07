@@ -16,8 +16,8 @@ import java.util.UUID;
 @RequestMapping("/storage")
 public class BucketController {
 
-    private AmazonClientService amazonClient;
-    private ProfileService profileService;
+    private final AmazonClientService amazonClient;
+    private final ProfileService profileService;
 
     @Autowired
     BucketController(AmazonClientService amazonClient, ProfileService profileService) {
@@ -33,8 +33,7 @@ public class BucketController {
 
     @PostMapping(path = "/uploadfile")
     public PicUrlDto uploadFile(@RequestPart(value = "file") MultipartFile file, @RequestPart(value = "picCate") String picCate,
-                                @RequestPart(value = "profileId") UUID profileId, @AuthenticationPrincipal User user) throws ProfileNotFoundException {
-
+                                @RequestPart(value = "profileId") String profileId, @AuthenticationPrincipal User user) throws ProfileNotFoundException {
         String savedURL = this.amazonClient.uploadFile(file);
         try {
             return profileService.updatePicUrl(picCate, savedURL, profileId, user);

@@ -9,11 +9,11 @@ import java.util.UUID;
 @Data
 public class PicUrlDto implements Serializable {
 
-    private final UUID profileId;
+    private final String profileId;
 
     private final String picurl;
 
-    public PicUrlDto(UUID profileId, String picurl) {
+    public PicUrlDto(String profileId, String picurl) {
         this.profileId = profileId;
         this.picurl = picurl;
     }

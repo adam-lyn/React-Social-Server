@@ -39,16 +39,21 @@ public class ProfileService {
 
     /*  update pic url
      */
-    public PicUrlDto updatePicUrl(String picCate, String savedURL, UUID profile_id, User user) throws ProfileNotFoundException {
-        profileRepo.updatePicUrl(picCate, savedURL, profile_id,user.getId());
-        if (profile_id.equals("0")) {
-            Profile profile = new Profile();
-            profile = profileRepo.saveAndFlush(profile);
+    public PicUrlDto updatePicUrl(String picCate, String savedURL, String s_profile_id, User user) throws ProfileNotFoundException {
+        UUID profile_id;
+        if (s_profile_id.equals("0")) {
+            Profile profile2 = new Profile();
+            Profile  profile = profileRepo.saveAndFlush(profile2);
             profile_id = profile.getId();
+//            profile.setUser(user);
+            s_profile_id = profile_id.toString();
+        }else {
+            profile_id = UUID.fromString(s_profile_id);
         }
+        int rtn = profileRepo.updatePicUrl(savedURL, s_profile_id, user.getId());
 
 //        if (rtnUrl.isPresent()) {
-        return new PicUrlDto(profile_id, savedURL);
+        return new PicUrlDto(s_profile_id, savedURL);
 //        } else {
 //            throw new ProfileNotFoundException();
 //        }
