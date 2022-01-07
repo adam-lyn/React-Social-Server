@@ -21,10 +21,10 @@ public class SearchService {
     }
 
     public String formatString(String string) {
-        return string.trim().toUpperCase();
+        return string.trim();
     }
 
     public List<User> getUsersBySearch(String string) {
-        return userRepository.findByEmailStartingWith(formatString(string));
+        return userRepository.findUsersByEmailContains(formatString(string));
     }
 }
