@@ -10,11 +10,14 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.revature.users.User;
+import org.hibernate.annotations.Type;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
@@ -26,8 +29,9 @@ public class Profile {
 
     @Id
     @Column(name="id", unique = true)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    @GeneratedValue
+    @Type(type="uuid-char")
+    private UUID id;
 	
     @Column(name="firstName", unique = false, nullable = false)
     private String firstName;

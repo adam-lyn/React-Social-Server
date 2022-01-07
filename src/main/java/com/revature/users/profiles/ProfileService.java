@@ -47,7 +47,7 @@ public class ProfileService {
         }
 
 //        if (rtnUrl.isPresent()) {
-            return new PicUrlDto(profile_id, savedURL);
+        return new PicUrlDto(profile_id, savedURL);
 //        } else {
 //            throw new ProfileNotFoundException();
 //        }
