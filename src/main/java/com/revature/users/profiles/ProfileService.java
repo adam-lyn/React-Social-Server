@@ -3,6 +3,7 @@ package com.revature.users.profiles;
 import com.revature.exceptions.ProfileNotFoundException;
 import com.revature.exceptions.WrongUserException;
 import com.revature.users.User;
+import com.revature.users.dtos.PicUrlDto;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -12,7 +13,7 @@ public class ProfileService {
 
     // dependency injection
 
-    private ProfileRepository profileRepo;
+    private final ProfileRepository profileRepo;
 
     public ProfileService(ProfileRepository profileRepository) {
         this.profileRepo = profileRepository;
@@ -33,6 +34,23 @@ public class ProfileService {
         } else {
             throw new WrongUserException();
         }
+    }
+
+    /*  update pic url
+     */
+    public PicUrlDto updatePicUrl(String picCate, String savedURL, String profile_id, User user) throws ProfileNotFoundException {
+        profileRepo.updatePicUrl(picCate, savedURL, profile_id,user.getId());
+        if (profile_id.equals("0")) {
+            Profile profile = new Profile();
+            profile = profileRepo.saveAndFlush(profile);
+            profile_id = profile.getId();
+        }
+
+//        if (rtnUrl.isPresent()) {
+            return new PicUrlDto(profile_id, savedURL);
+//        } else {
+//            throw new ProfileNotFoundException();
+//        }
     }
 
     /*  Parameter: profileID
