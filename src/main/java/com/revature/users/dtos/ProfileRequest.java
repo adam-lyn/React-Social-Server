@@ -2,9 +2,11 @@ package com.revature.users.dtos;
 
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public class ProfileRequest {
-    private String id;
+    private UUID id;
     private String first_name;
     private String last_name;
     private String birthday;

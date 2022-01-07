@@ -1,4 +1,5 @@
 package com.revature.users.profiles;
+import com.revature.exceptions.ProfileNotFoundException;
 import com.revature.users.User;
 
 import static org.junit.Assert.assertEquals;
@@ -34,7 +35,7 @@ public class TestProfileService
 	}
 	
 	@Test
-	public void findProfileByIdPositive() throws UserNotFoundException {
+	public void findProfileByIdPositive() throws UserNotFoundException, ProfileNotFoundException {
 		Profile profile = new Profile();
 		Mockito.when(profileRepository.findById(UUID.fromString("d921e5f2-86cb-4a0f-abd9-b9ec4aafa3c5"))).thenReturn(Optional.of(profile));
 		ProfileService profileService=new ProfileService(profileRepository);
@@ -58,7 +59,7 @@ public class TestProfileService
 	}
 
 	@Test
-	public void findProfileByUser() throws UserNotFoundException {
+	public void findProfileByUser() throws UserNotFoundException, ProfileNotFoundException {
 		User u=new User();
 		Profile profile = new Profile();
 		Mockito.when(profileRepository.getProfileByUser(u)).thenReturn(Optional.of(profile));
@@ -67,7 +68,7 @@ public class TestProfileService
 	}
 
 	@Test
-	public void checkProfileOwner() throws UserNotFoundException {
+	public void checkProfileOwner() throws UserNotFoundException, ProfileNotFoundException {
 		User u=new User();
 		Profile profile = new Profile();
 		profile.setUser(u);

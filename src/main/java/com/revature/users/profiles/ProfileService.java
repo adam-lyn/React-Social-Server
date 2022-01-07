@@ -7,6 +7,7 @@ import com.revature.users.dtos.PicUrlDto;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ProfileService {
@@ -38,7 +39,7 @@ public class ProfileService {
 
     /*  update pic url
      */
-    public PicUrlDto updatePicUrl(String picCate, String savedURL, String profile_id, User user) throws ProfileNotFoundException {
+    public PicUrlDto updatePicUrl(String picCate, String savedURL, UUID profile_id, User user) throws ProfileNotFoundException {
         profileRepo.updatePicUrl(picCate, savedURL, profile_id,user.getId());
         if (profile_id.equals("0")) {
             Profile profile = new Profile();
@@ -56,7 +57,7 @@ public class ProfileService {
     /*  Parameter: profileID
         Returns the specified Profile
      */
-    public Profile findProfileById(int profileId) throws ProfileNotFoundException {
+    public Profile findProfileById(UUID profileId) throws ProfileNotFoundException {
         Optional<Profile> profile = profileRepo.findById(profileId);
 
         if (profile.isPresent()) {
@@ -78,7 +79,7 @@ public class ProfileService {
         }
     }
 
-    public Boolean checkProfileOwnership(int id, User user) throws ProfileNotFoundException {
+    public Boolean checkProfileOwnership(UUID id, User user) throws ProfileNotFoundException {
         Optional<Profile> profile = profileRepo.findById(id);
 
         if (profile.isPresent()) {

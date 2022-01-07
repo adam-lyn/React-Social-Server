@@ -9,6 +9,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.UUID;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/storage")
@@ -31,7 +33,7 @@ public class BucketController {
 
     @PostMapping(path = "/uploadfile")
     public PicUrlDto uploadFile(@RequestPart(value = "file") MultipartFile file, @RequestPart(value = "picCate") String picCate,
-                                @RequestPart(value = "profileId") String profileId, @AuthenticationPrincipal User user) throws ProfileNotFoundException {
+                                @RequestPart(value = "profileId") UUID profileId, @AuthenticationPrincipal User user) throws ProfileNotFoundException {
 
         String savedURL = this.amazonClient.uploadFile(file);
         try {

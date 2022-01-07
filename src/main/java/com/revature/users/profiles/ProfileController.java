@@ -1,5 +1,6 @@
 package com.revature.users.profiles;
 
+import com.revature.exceptions.ProfileNotFoundException;
 import com.revature.users.UserService;
 import com.revature.users.dtos.ProfileRequest;
 import com.revature.users.dtos.ProfileResponse;
@@ -39,7 +40,7 @@ public class ProfileController {
 		try {
 
 			return ResponseEntity.ok(new ProfileResponse(profileService.findProfileById(UUID.fromString(id))));
-		} catch (UserNotFoundException e) {
+		} catch (UserNotFoundException | ProfileNotFoundException e) {
 //			e.printStackTrace();
 			return ResponseEntity.status(404).build();
 		}
@@ -55,7 +56,7 @@ public class ProfileController {
 			User query = new User();
 			query.setId(id);
 			return ResponseEntity.ok(new ProfileResponse(profileService.findUsersProfile(query)));
-		} catch (UserNotFoundException e) {
+		} catch (UserNotFoundException | ProfileNotFoundException e) {
 			//e.printStackTrace();
 			return ResponseEntity.status(404).build();
 		}
@@ -70,7 +71,7 @@ public class ProfileController {
 		try {
 			// Reconstruct the profile from the DTO
 			Profile updateTarget = new Profile();
-			updateTarget.setId(UUID.fromString(profile.getId()));
+			updateTarget.setId(profile.getId());
 			updateTarget.setAboutMe(profile.getAbout_me());
 			updateTarget.setBirthday(profile.getBirthday());
 			updateTarget.setFirstName(profile.getFirst_name());
@@ -96,7 +97,7 @@ public class ProfileController {
 	public ResponseEntity<ProfileResponse> findThisUsersProfile(@AuthenticationPrincipal User user) {
 		try {
 			return ResponseEntity.ok(new ProfileResponse(profileService.findUsersProfile(user)));
-		} catch (UserNotFoundException e) {
+		} catch (UserNotFoundException | ProfileNotFoundException e) {
 //			e.printStackTrace();
 			return ResponseEntity.status(404).build();
 		}
@@ -110,7 +111,7 @@ public class ProfileController {
 	public ResponseEntity<Boolean> checkProfileOwnership(@PathVariable String id, @AuthenticationPrincipal User user) {
 		try {
 			return ResponseEntity.ok(profileService.checkProfileOwnership(UUID.fromString(id), user));
-		} catch (UserNotFoundException e) {
+		} catch (UserNotFoundException | ProfileNotFoundException e) {
 //			e.printStackTrace();
 			return ResponseEntity.status(404).build();
 		}
