@@ -3,6 +3,7 @@ package com.revature.users.profiles;
 import com.revature.exceptions.ProfileNotFoundException;
 import com.revature.exceptions.WrongUserException;
 import com.revature.users.User;
+import com.revature.users.UserRepository;
 import com.revature.users.dtos.PicUrlDto;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +16,11 @@ public class ProfileService {
     // dependency injection
 
     private final ProfileRepository profileRepo;
+    private final UserRepository userRepository;
 
-    public ProfileService(ProfileRepository profileRepository) {
+    public ProfileService(ProfileRepository profileRepository, UserRepository userRepository) {
         this.profileRepo = profileRepository;
+        this.userRepository = userRepository;
     }
 
 
@@ -37,26 +40,42 @@ public class ProfileService {
         }
     }
 
+    /*  test
+     */
+    public void test() {
+        profileRepo.testCRUD();
+    }
+
     /*  update pic url
      */
-    public PicUrlDto updatePicUrl(String picCate, String savedURL, String s_profile_id, User user) throws ProfileNotFoundException {
+    public PicUrlDto updatePicUrl(String picCate, String savedURL, String s_profile_id, User user) throws WrongUserException {
         UUID profile_id;
         if (s_profile_id.equals("0")) {
             Profile profile2 = new Profile();
-            Profile  profile = profileRepo.saveAndFlush(profile2);
+            Profile profile = profileRepo.saveAndFlush(profile2);
             profile_id = profile.getId();
 //            profile.setUser(user);
             s_profile_id = profile_id.toString();
-        }else {
+
+            Optional<User> dbUser = userRepository.findById(user.getId());
+            if (!dbUser.isPresent()) {
+                userRepository.save(user);
+            }
+
+        } else {
             profile_id = UUID.fromString(s_profile_id);
         }
-        int rtn = profileRepo.updatePicUrl(savedURL, s_profile_id, user.getId());
-
-//        if (rtnUrl.isPresent()) {
-        return new PicUrlDto(s_profile_id, savedURL);
-//        } else {
-//            throw new ProfileNotFoundException();
-//        }
+        int rtn;
+        if (picCate.equals("header")) {
+            rtn = profileRepo.updateHeaderPicUrl(savedURL, s_profile_id, user.getId());
+        } else {
+            rtn = profileRepo.updateProfilePicUrl(savedURL, s_profile_id, user.getId());
+        }
+        if (rtn > 0) {
+            return new PicUrlDto(picCate, s_profile_id, savedURL);
+        } else {
+            throw new WrongUserException();
+        }
     }
 
     /*  Parameter: profileID
