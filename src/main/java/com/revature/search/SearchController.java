@@ -1,11 +1,8 @@
 package com.revature.search;
 
 import com.revature.search.dtos.SearchResponse;
-import com.revature.users.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -20,8 +17,7 @@ public class SearchController {
     }
 
     @GetMapping
-    public SearchResponse getUsersByString(@RequestParam(name = "query", required = true) String searchInput) {
-        List<User> users = searchService.getUsersBySearch(searchInput);
-        return new SearchResponse(users);
+    public SearchResponse getUsersByString(@RequestParam(name = "query", required = true) String query) {
+        return searchService.queryUsers(query);
     }
 }

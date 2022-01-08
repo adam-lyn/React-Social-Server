@@ -4,13 +4,13 @@ import com.revature.search.dtos.SearchResponse;
 
 import java.time.LocalTime;
 
-public class QueryBucket {
+public class ResponseBucket {
 
 
     private final SearchResponse response;
     private final LocalTime maxCacheAge;
 
-    public QueryBucket(SearchResponse response) {
+    public ResponseBucket(SearchResponse response) {
         this.response = response;
         this.maxCacheAge = LocalTime.now().plusSeconds(360);
     }
