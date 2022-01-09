@@ -1,5 +1,6 @@
 package com.revature.search;
 
+import com.revature.groups.GroupRepository;
 import com.revature.users.UserRepository;
 import com.revature.search.dtos.SearchResponse;
 import org.slf4j.Logger;
@@ -14,10 +15,12 @@ public class SearchService {
 
     private final SearchCache searchCache;
     private final UserRepository userRepository;
+    private final GroupRepository groupRepository;
 
     @Autowired
-    public SearchService(UserRepository userRepository) {
+    public SearchService(UserRepository userRepository, GroupRepository groupRepository) {
         this.userRepository = userRepository;
+        this.groupRepository = groupRepository;
         this.searchCache = new SearchCache();
     }
 
