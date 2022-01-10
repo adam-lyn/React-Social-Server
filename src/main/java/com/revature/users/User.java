@@ -1,7 +1,6 @@
 package com.revature.users;
 
 import com.revature.groups.Group;
-import com.revature.search.SearchEntity;
 import com.revature.search.Searchable;
 import com.revature.users.usersettings.UserSettings;
 import lombok.*;
@@ -16,7 +15,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
-public class User extends SearchEntity {
+public class User implements Searchable {
 	//ID is coming from firebase, will be unique for each user
     //Following: join table connection between users
 
@@ -47,6 +46,11 @@ public class User extends SearchEntity {
     @Override
     public String getLabel() {
         return this.email;
+    }
+
+    @Override
+    public String getKey() {
+        return this.id.toString();
     }
 
     @Override

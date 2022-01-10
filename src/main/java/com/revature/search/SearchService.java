@@ -19,13 +19,11 @@ public class SearchService {
     private final SearchCache searchCache;
     private final UserRepository userRepository;
     private final GroupRepository groupRepository;
-    private final SearchRepository searchRepository;
 
     @Autowired
-    public SearchService(UserRepository userRepository, GroupRepository groupRepository, SearchRepository searchRepository) {
+    public SearchService(UserRepository userRepository, GroupRepository groupRepository) {
         this.userRepository = userRepository;
         this.groupRepository = groupRepository;
-        this.searchRepository = searchRepository;
         this.searchCache = new SearchCache();
     }
 
@@ -35,13 +33,13 @@ public class SearchService {
             return searchCache.get(query);
         }
         Stream<Searchable> userSearch = userRepository.findByEmailContains(query).stream();
-        Stream<Searchable> grouPSearch = groupRepository.findByNameContains(query).stream();
-        SearchResponse response = new SearchResponse(Stream.concat(userSearch, grouPSearch).collect(Collectors.toList()));
+        Stream<Searchable> groupSearch = groupRepository.findByNameContains(query).stream();
+        SearchResponse response = new SearchResponse(Stream.concat(userSearch, groupSearch).collect(Collectors.toList()));
         searchCache.put(query, response);
         return searchCache.get(query);
     }
 
-    public SearchResponse query2(String query) {
-        return new SearchResponse(searchRepository.findByLabelContains(query));
-    }
+//    public SearchResponse query2(String query) {
+//        return new SearchResponse(searchRepository.findByLabelContains(query));
+//    }
 }

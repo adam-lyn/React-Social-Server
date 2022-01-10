@@ -1,7 +1,6 @@
 package com.revature.groups;
 
-import com.revature.search.SearchEntity;
-
+import com.revature.search.Searchable;
 import com.revature.users.User;
 import lombok.*;
 import org.hibernate.annotations.Type;
@@ -17,7 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Table(name = "groups")
 @Entity
-public class Group extends SearchEntity {
+public class Group implements Searchable {
 
     @Id
     @Column(name = "group_id")
@@ -54,6 +53,11 @@ public class Group extends SearchEntity {
     @Override
     public String getLabel() {
         return this.name;
+    }
+
+    @Override
+    public String getKey() {
+        return this.id.toString();
     }
 
     @Override
