@@ -17,7 +17,12 @@ public class SearchController {
     }
 
     @GetMapping
-    public SearchResponse getUsersByString(@RequestParam(name = "query", required = true) String query) {
-        return searchService.queryUsers(query);
+    public SearchResponse queryByString(@RequestParam(name = "query", required = true) String query) {
+        return searchService.query(query);
+    }
+
+    @GetMapping(path= "/2")
+    public SearchResponse query2ByString(@RequestParam(name = "query", required = true) String query) {
+        return searchService.query2(query);
     }
 }

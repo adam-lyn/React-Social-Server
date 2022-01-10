@@ -1,36 +1,32 @@
 package com.revature.search.dtos;
 
-import com.revature.users.User;
-import com.revature.users.profiles.Profile;
+import com.revature.search.Searchable;
 import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Data
 public class SearchResponse {
 
-    private final List<UserSearchResponse> responses;
+    private final List<EntitySearchResult> responses;
 
-    public SearchResponse(List<User> users) {
-        this.responses = new ArrayList<UserSearchResponse>();
-        for (User user : users) {
-            UserSearchResponse resp =
-                    new UserSearchResponse(user.getEmail(),
-                            user.getId());
-            this.responses.add(resp);
+    public SearchResponse(List<Searchable> entities) {
+        this.responses = new ArrayList<EntitySearchResult>();
+        for (Searchable entity : entities) {
+            EntitySearchResult result = new EntitySearchResult(entity);
+            this.responses.add(result);
         }
     }
 
     @Data
-    public static class UserSearchResponse {
-        private final String email;
-        private final String id;
+    public static class EntitySearchResult {
+        private final String label;
+        private final String key;
 
-        public UserSearchResponse(String email, String id) {
-            this.email = email;
-            this.id = id;
+        public EntitySearchResult(Searchable entity) {
+            this.label = entity.getLabel();
+            this.key = entity.getKey();
         }
     }
 }
