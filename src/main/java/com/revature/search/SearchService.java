@@ -27,14 +27,24 @@ public class SearchService {
         this.searchCache = new SearchCache();
     }
 
-    public SearchResponse query(String query) {
+    public SearchResponse userQuery(String query) {
         if (searchCache.contains(query)) {
             logger.info("Cache HIT for valid bucket containing SearchResponse for query: {}", query);
             return searchCache.get(query);
         }
         Stream<Searchable> userSearch = userRepository.findByEmailContains(query).stream();
+        SearchResponse response = new SearchResponse(userSearch.collect(Collectors.toList()));
+        searchCache.put(query, response);
+        return searchCache.get(query);
+    }
+
+    public SearchResponse groupQuery(String query) {
+        if (searchCache.contains(query)) {
+            logger.info("Cache HIT for valid bucket containing SearchResponse for query: {}", query);
+            return searchCache.get(query);
+        }
         Stream<Searchable> groupSearch = groupRepository.findByNameContains(query).stream();
-        SearchResponse response = new SearchResponse(Stream.concat(userSearch, groupSearch).collect(Collectors.toList()));
+        SearchResponse response = new SearchResponse(groupSearch.collect(Collectors.toList()));
         searchCache.put(query, response);
         return searchCache.get(query);
     }
