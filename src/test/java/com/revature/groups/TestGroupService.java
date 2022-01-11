@@ -41,10 +41,15 @@ public class TestGroupService {
         Group group = new Group();
         User user = new User();
         group.setOwner(user);
+
         group.setUsers(new ArrayList<>());
+        group.setId(UUID.randomUUID());
+
         Group[] toIterable = {group};
         Iterable<Group> dummyResult = Arrays.asList(toIterable);
+
         when(mockGroupRepo.findAll()).thenReturn(dummyResult);
+
         List<GroupResponse> expectedList = new ArrayList<>();
         dummyResult.iterator().forEachRemaining(group1 -> expectedList.add(new GroupResponse(group1)));
 
