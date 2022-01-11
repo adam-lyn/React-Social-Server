@@ -32,8 +32,8 @@ public class SearchService {
             logger.info("Cache HIT for valid bucket containing SearchResponse for query: {}", query);
             return searchCache.get(query);
         }
-        Stream<Searchable> userSearch = userRepository.findByEmailContains(query).stream();
-        Stream<Searchable> groupSearch = groupRepository.findByNameContains(query).stream();
+        Stream<SearchEntity> userSearch = userRepository.findByEmailContains(query).stream().map(user -> new SearchEntity(user, "user"));
+        Stream<SearchEntity> groupSearch = groupRepository.findByNameContains(query).stream().map(group -> new SearchEntity(group, "group"));
         SearchResponse response = new SearchResponse(Stream.concat(userSearch, groupSearch).collect(Collectors.toList()));
         searchCache.put(query, response);
         return searchCache.get(query);

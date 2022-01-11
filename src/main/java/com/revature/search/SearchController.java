@@ -21,7 +21,7 @@ public class SearchController {
 //        return searchService.query(query);
 //    }
 
-    @GetMapping(path= "/2")
+    @GetMapping(path= "/")
     public SearchResponse query2ByString(@RequestParam(name = "query", required = true) String query) {
         return searchService.query(query);
     }

@@ -21,7 +21,6 @@ public class Group implements Searchable {
     @Id
     @Column(name = "group_id")
     @GeneratedValue()
-    @Type(type="uuid-char")
     private UUID id;
 
     @ManyToOne
