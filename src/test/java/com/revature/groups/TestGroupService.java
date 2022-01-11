@@ -97,6 +97,7 @@ public class TestGroupService {
         owner.setEmail("real@email.com");
         Group group = new Group();
         group.setOwner(owner);
+        group.setId(UUID.randomUUID());
         group.setUsers(new ArrayList<>());
         GroupResponse expectedResult = new GroupResponse(group);
 
