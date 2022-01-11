@@ -63,6 +63,7 @@ public class TestGroupService {
         Group group = new Group();
         User user = new User();
         group.setOwner(user);
+        group.setId(UUID.randomUUID());
         group.setUsers(new ArrayList<>());
         String groupName = "test";
         group.setName(groupName);
