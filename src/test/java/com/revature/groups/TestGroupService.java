@@ -441,6 +441,7 @@ public class TestGroupService {
         joinedUsers.add(newOwner);
 
         Group validGroup = new Group();
+        validGroup.setId(UUID.randomUUID());
         validGroup.setName("Group");
         validGroup.setDescription("I am Group");
         validGroup.setProfilePic("Valid");
