@@ -1,7 +1,10 @@
 package com.revature.groups;
 
 import com.revature.search.Searchable;
+import com.revature.groups.dtos.GroupCreationRequest;
+import com.revature.posts.postmeta.PostMeta;
 import com.revature.users.User;
+import com.revature.users.usersettings.UserSettings;
 import lombok.*;
 import org.hibernate.annotations.Type;
 
