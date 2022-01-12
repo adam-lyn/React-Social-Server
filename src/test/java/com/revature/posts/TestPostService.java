@@ -1,14 +1,18 @@
 package com.revature.posts;
 
+import com.revature.comments.Comment;
 import com.revature.comments.CommentRepository;
 import com.revature.follow.FollowRepository;
 import com.revature.groups.Group;
 import com.revature.groups.GroupRepository;
 import com.revature.posts.dtos.NewPostRequest;
+import com.revature.posts.dtos.PostResponse;
+import com.revature.posts.postmeta.PostMeta;
 import com.revature.posts.postmeta.PostMetaRepository;
 import com.revature.users.User;
 import com.revature.users.UserRepository;
 import com.revature.users.profiles.ProfileRepository;
+import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +21,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.invocation.InvocationOnMock;
 
 
-import java.util.ArrayList;
+import java.util.*;
 
 import static org.mockito.Mockito.*;
 
@@ -136,6 +140,47 @@ public class TestPostService {
 
 
 
-	
-	
+
+
+
+
+
+
+	@Test
+	public void getCommentsReturnsAPopulatedListOfPostResonses(){
+		//Arrange (define inputs, mock dependency calls)
+		List<Post> initialList = new LinkedList<>();
+		PostMeta metaForPost = new PostMeta();
+		Comment commentInPost = new Comment();
+		Post postInList1 = new Post("test1", "WWW");
+		Post postInList2 = new Post("test2", "WWW");
+		Post postInList3 = new Post("test3", "WWW");
+		initialList.addAll(Arrays.asList(postInList1, postInList2, postInList3));
+
+		//Act (do the thing)
+		result = postService.getComments(initialList);
+
+
+		//Assert (what did you expect?)
+		Assert.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	}
+
 }
+
+
+

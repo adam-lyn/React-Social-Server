@@ -51,5 +51,4 @@ public class Post {
         this.contentLink = contentLink;
     }
 
-
 }

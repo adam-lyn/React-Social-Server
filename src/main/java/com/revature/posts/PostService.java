@@ -16,6 +16,7 @@ import com.revature.users.User;
 import com.revature.comments.CommentRepository;
 import com.revature.posts.postmeta.PostMetaRepository;
 import com.revature.users.UserRepository;
+import com.revature.users.profiles.Profile;
 import com.revature.users.profiles.ProfileRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -182,7 +183,7 @@ public class PostService {
         return postRepository.save(newPost);
     }
 
-	private List<PostResponse> getComments(List<Post> posts) {
+	public List<PostResponse> getCommentsAsPostResponses(List<Post> posts) {
 		List<PostResponse> refinedRepo = new LinkedList<>();
 
 		for (int i = 0; i < posts.size(); i++) {
@@ -203,8 +204,12 @@ public class PostService {
 				refinedComment.setCommentText(rawComment.getCommentText());
 				refinedComment.setDate(rawComment.getDate());
 
+				// TODO replace RuntimeException with something more specific
+				Profile profile = profileRepository.getProfileByUser(rawComment.getAuthor())
+						                           .orElseThrow(() -> new RuntimeException("No profile found."));
+
 				// Create the author object we need
-				AuthorDto refinedAuthor = new AuthorDto(rawComment.getAuthor(), profileRepository);
+				AuthorDto refinedAuthor = new AuthorDto(profile);
 				refinedComment.setAuthor(refinedAuthor);
 
 				// Add the result to the list

@@ -14,9 +14,11 @@ public class AuthorDto {
     private String lastname;
     private String pfId;
 
+    //TODO: Refactor to not use Repo fetch logic here, but in the service class. *from Wezley*
     public AuthorDto (User raw, ProfileRepository profileRepository) {
         // Set the user id from the given user
         this.id = raw.getId();
+        //set Author
 
 
         Optional<Profile> optionalProfile = profileRepository.getProfileByUser(raw);
@@ -36,4 +38,12 @@ public class AuthorDto {
 
 
     }
+
+    public AuthorDto(Profile authorProfile) {
+        this.id = authorProfile.getUser().getId();
+        this.firstname = authorProfile.getFirstName();
+        this.lastname = authorProfile.getLastName();
+        this.pfId = authorProfile.getId().toString();
+    }
+
 }
