@@ -1,7 +1,5 @@
 package com.revature.users.profiles;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.setAllowComparingPrivateFields;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -10,15 +8,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.users.User;
-import com.revature.users.UserService;
 import com.revature.users.dtos.ProfileRequest;
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import com.revature.ReverbApplication;
 import org.springframework.test.web.servlet.MockMvc;
@@ -72,12 +66,6 @@ public class TestProfileControllerIntegration {
 
 
     @Test
-    public void testCheckProfileOwnership()throws Exception{
-
-    }
-
-
-    @Test
     public void testUpdateProfileWithInvalidInput() throws Exception {
         Profile updateTarget = new Profile();
         User u=new User("d921e5f2-86cb-4a0f-abd9-b9ec4aafa3c5","dev4@dev.com", null,null, null);
@@ -104,7 +92,7 @@ public class TestProfileControllerIntegration {
 
     @Test
     public void testFindThisUsersProfileGivenInvalidUser() throws Exception {
-        User u=new User();
+        User u=new User("d921e5f2-86cb-4a0f-abd9-b9ec4aafa3d5","dev4@dev.com", null,null, null);
         String requestPayload = mapper.writeValueAsString(u);
         MvcResult result = mockMvc.perform(get("/api/profile/getUsersProfile").contentType("application/json").content(requestPayload))
                 .andDo(print())
