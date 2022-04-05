@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@CrossOrigin // TODO are these necessary? cors seems to be managed in SecurityConfiguration
+                    // TODO are these necessary? cors seems to be managed in SecurityConfiguration
 @RequestMapping("/api/user")
 public class UserController {
 
