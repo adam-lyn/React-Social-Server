@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = {"http://reverb-ui-bucket.s3-website-us-west-1.amazonaws.com"})
+@CrossOrigin
 @RequestMapping(path = "/api/search")
 public class SearchController {
 
