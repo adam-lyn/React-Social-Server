@@ -9,6 +9,7 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Data
 public class ProfileResponse {
@@ -24,7 +25,7 @@ public class ProfileResponse {
     private String user_id;
     private Integer follower_num;
     private Integer following_num;
-    private List<UserFollower> followers;
+    private List<UserDto> followers;
 
     public ProfileResponse(Profile raw){
         this.id = raw.getId().toString();
@@ -39,6 +40,7 @@ public class ProfileResponse {
         this.user_id = raw.getUser().getId();
         this.follower_num = raw.getUser().getFollower().size();
         this.following_num = raw.getUser().getFollowing().size();
+        this.followers = raw.getUser().getFollower().stream().map(UserDto::new).collect(Collectors.toList());
     }
 
     public String getId() {
@@ -137,22 +139,5 @@ public class ProfileResponse {
         this.following_num = following_num;
     }
 
-    public List<UserFollower> getFollowers() {
-        return followers;
-    }
 
-    public void setFollowers(Profile profile) {
-        UserFollower userFollower = new UserFollower(profile);
-        this.followers.add(userFollower);
-    }
-
-    private static class UserFollower {
-        String first_name;
-        String last_name;
-
-        private UserFollower(Profile follower) {
-            this.first_name = follower.getFirstName();
-            this.last_name = follower.getLastName();
-        }
-    }
 }
