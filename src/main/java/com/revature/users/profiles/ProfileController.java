@@ -54,7 +54,14 @@ public class ProfileController {
 		try {
 			User query = new User();
 			query.setId(id);
-			return ResponseEntity.ok(new ProfileResponse(profileService.findUsersProfile(query)));
+			ProfileResponse profileResponse = new ProfileResponse(profileService.findUsersProfile(query));
+
+			for (int i = 0; i < profileResponse.getFollower_num(); i++) {
+				Profile followerProfile = profileService.findUsersProfile(query.getFollower().get(i));
+				profileResponse.setFollowers(followerProfile);
+			}
+
+			return ResponseEntity.ok(profileResponse);
 		} catch (UserNotFoundException e) {
 			//e.printStackTrace();
 			return ResponseEntity.status(404).build();
