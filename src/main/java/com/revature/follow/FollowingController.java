@@ -40,7 +40,9 @@ public class FollowingController {
     // Get the followers of the current user
     @GetMapping(path = "/get-owner-followers")
     public ResponseEntity<List<User>> getListOfFollowers(@AuthenticationPrincipal User currentUser) {
+        //User followers = userRepository.getById(currentUser.getId());
         return ResponseEntity.ok(followingService.getFollowers(currentUser));
+    //    return ResponseEntity.ok(followingService.getFollowers(currentUser));
     }
 
     // Get the number of followers of the user in the path variable

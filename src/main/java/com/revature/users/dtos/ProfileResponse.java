@@ -6,6 +6,8 @@ import com.revature.users.profiles.Profile;
 import com.revature.users.profiles.ProfileRepository;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Data
@@ -22,6 +24,7 @@ public class ProfileResponse {
     private String user_id;
     private Integer follower_num;
     private Integer following_num;
+    private List<UserFollower> followers;
 
     public ProfileResponse(Profile raw){
         this.id = raw.getId().toString();
@@ -38,5 +41,20 @@ public class ProfileResponse {
 
         this.follower_num = raw.getUser().getFollower().size();
         this.following_num = raw.getUser().getFollowing().size();
+        this.followers = new ArrayList<UserFollower>();
+        for(int i = 0; i < this.follower_num; i++) {
+            UserFollower userFollower = new UserFollower(raw.getUser().getFollower().get(i).);
+            followers.add()
+        }
+    }
+
+    private class UserFollower {
+        String first_name;
+        String last_name;
+
+        private UserFollower(Profile follower) {
+            this.first_name = follower.getFirstName();
+            this.last_name = follower.getLastName();
+        }
     }
 }
