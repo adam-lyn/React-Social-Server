@@ -8,11 +8,13 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface NotificationRepository extends JpaRepository<Notification, UUID> {
+public interface NotificationRepository extends JpaRepository<Notification, String> {
 //    @Query("from notifications")
 //    public List<Post> findPostsByGroupId(Group group);
 
+    Optional<Notification> findNotificationById(String id);
 }

@@ -3,8 +3,12 @@ package com.revature.notifications;
 import com.revature.groups.GroupService;
 import com.revature.groups.dtos.GroupCreationRequest;
 import com.revature.groups.dtos.GroupResponse;
+import com.revature.notifications.dtos.NewNotificationRequest;
+import com.revature.notifications.dtos.NotificationResponse;
 import com.revature.users.User;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,10 +16,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/notification")
+@CrossOrigin
 public class NotificationController {
 
 
-    private NotificationService notificationService;
+    private final NotificationService notificationService;
 
     public NotificationController(NotificationService notificationService) {
         this.notificationService = notificationService;
@@ -30,18 +35,20 @@ public class NotificationController {
 
     //Get One Notification
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "/{notificationName}", produces = "application/json")
-    public NotificationResponse getOneNotification(@PathVariable String id) {
-        return notificationService.getNotification(id);
+//    @GetMapping(value = "/d5ERictvfpdyQ791YQ3dmnG2jQP2", produces = "application/json")
+    @GetMapping(value = "/d5ERictvfpdyQ791YQ3dmnG2jQP2", produces = "application/json")
+    public ResponseEntity<NotificationResponse> getOneNotification() {
+        System.out.println("Aidan smells");
+        return ResponseEntity.ok(notificationService.getNotification("d5ERictvfpdyQ791YQ3dmnG2jQP2"));
     }
 
     // Create Notification
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "/create", consumes = "application/json")
-    public GroupResponse createNotification(
-            @RequestBody NotificationCreationRequest notificationCreationRequest,
+    public NotificationResponse createNotification(
+            @RequestBody NewNotificationRequest newNotificationRequest,
             @AuthenticationPrincipal User owner) {
-        return notificationService.createNotification(notificationCreationRequest, owner);
+        return notificationService.createNotification(newNotificationRequest, owner);
     }
 
     // delete notification

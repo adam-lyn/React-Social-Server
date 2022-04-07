@@ -5,6 +5,8 @@ import com.revature.groups.Group;
 import com.revature.groups.GroupRepository;
 import com.revature.groups.dtos.GroupCreationRequest;
 import com.revature.groups.dtos.GroupResponse;
+import com.revature.notifications.dtos.NewNotificationRequest;
+import com.revature.notifications.dtos.NotificationResponse;
 import com.revature.users.User;
 import com.revature.users.UserRepository;
 import org.springframework.stereotype.Service;
@@ -38,29 +40,32 @@ public class NotificationService {
     }
 
     /**
-     * @param notificationName - name of notification to be fetched
+     * @param id - Id of notification to be fetched
      * @return - Response entity representing notification
      */
     public NotificationResponse getNotification(String id) {
-        Notification notification = notificationRepository.findNotificationByName(id)
+        System.out.println("checking the Id:" + id);
+        Notification notification = notificationRepository.findNotificationById(id)
                 .orElseThrow(NotificationNotFoundException::new);
+        System.out.println(notification);
+        System.out.println(new NotificationResponse(notification));
         return new NotificationResponse(notification);
     }
 
     /**
-     * @param notificationCreationRequest - contains notification Type_id of new notification and Other User.
+     * @param newNotificationRequest - contains notification Type_id of new notification and Other User.
      * @param owner - Currently logged in user gets set as owner.
      */
-    public NotificationResponse createNotification(NotificationCreationRequest notificationCreationRequest, User owner) {
+    public NotificationResponse createNotification(NewNotificationRequest newNotificationRequest, User owner) {
 
-        if (!notNullOrEmpty.test(notificationCreationRequest.getType_id()))
+        if (!notNullOrEmpty.test(newNotificationRequest.getType_id().toString()))
             throw new InvalidRequestException("Invalid notification type entered");
 
         Notification newNotification = new Notification();
 
         newNotification.setOwner(owner);
-        newNotification.setType_id(notificationCreationRequest.getType_id());
-        newNotification.setOtherUser(notificationCreationRequest.getOtherUser());
+        newNotification.setType_id(newNotificationRequest.getType_id());
+        newNotification.setOtherUser(newNotificationRequest.getOtherUser());
         //TODO: maybe generate timestamp here?
 
 
