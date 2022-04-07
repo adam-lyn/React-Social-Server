@@ -21,4 +21,8 @@ public class SearchController {
         return searchService.userQuery(query);
     }
 
+    @GetMapping("/group")
+    public SearchResponse queryByStringGroup(@RequestParam(name = "query", required = true) String query) {
+        return searchService.groupQuery(query);
+    }
 }

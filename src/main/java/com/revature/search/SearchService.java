@@ -38,6 +38,7 @@ public class SearchService {
         return searchCache.get(query);
     }
 
+
     public SearchResponse groupQuery(String query) {
         if (searchCache.contains(query)) {
             logger.info("Cache HIT for valid bucket containing SearchResponse for query: {}", query);
