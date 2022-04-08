@@ -2,13 +2,18 @@ package com.revature.follow;
 
 import com.revature.users.User;
 import com.revature.users.UserRepository;
+import com.revature.users.dtos.ProfileResponse;
+import com.revature.users.profiles.Profile;
+import com.revature.users.profiles.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/user")
@@ -16,12 +21,14 @@ public class FollowingController {
 
     private final FollowingService followingService;
     private final UserRepository userRepository;
+    private final ProfileService profileService;
 //    private User currentUser;
 
     @Autowired
-    public FollowingController(FollowingService followingService, UserRepository userRepository) {
+    public FollowingController(FollowingService followingService, UserRepository userRepository, ProfileService profileService) {
         this.followingService = followingService;
         this.userRepository = userRepository;
+        this.profileService = profileService;
     }
 
     //get user id from profile id
@@ -109,5 +116,25 @@ public class FollowingController {
             ResponseEntity.internalServerError().build();
         }
     }
+
+    // this method will return FollowerResponse so we can access their name, img_url etc..
+    @GetMapping(path="/getProfileByUserId/{userId}")
+    public List<FollowerResponse> getFollowerProfilesByUserId(@PathVariable String userId){
+        User user = userRepository.findUserById(userId);
+        List<User> followers = followingService.getFollowers(user);
+
+        // for loop to get profile for each user in followers list
+        List<FollowerResponse> followerProfiles = new ArrayList<>();
+        for (User follower: followers){
+            System.out.println(follower);
+            Profile profile = profileService.findUsersProfile(follower);
+            followerProfiles.add(new FollowerResponse(profile.getFirstName(), profile.getLastName(),
+                    profile.getUser().getEmail(), profile.getProfileImg()));
+
+        }
+        System.out.println("FOLLOWER RESPONSE PROFILES " + followerProfiles);
+        return followerProfiles;
+    };
+
 }
 
