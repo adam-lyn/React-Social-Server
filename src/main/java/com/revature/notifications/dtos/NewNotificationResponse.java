@@ -9,14 +9,14 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
-public class NotificationResponse {
+public class NewNotificationResponse {
     private String id;
     private User owner;
     private NotificationType type_id;
     private LocalDateTime date;
     private User otherUser;
 
-    public NotificationResponse(Notification notification) {
+    public NewNotificationResponse(Notification notification) {
         this.id = notification.getId();
         this.owner = notification.getOwner();
         this.type_id = notification.getType_id();
@@ -36,3 +36,4 @@ public class NotificationResponse {
                 '}';
     }
 }
+

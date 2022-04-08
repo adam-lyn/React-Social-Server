@@ -23,7 +23,7 @@ public class Notification {
 
     @Id
     @Column(name = "notification_id", unique = true)
-    @GeneratedValue()
+//    @GeneratedValue()
 //    @Type(type = "uuid-char")
     private String id;
 
