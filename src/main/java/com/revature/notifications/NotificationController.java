@@ -42,6 +42,13 @@ public class NotificationController {
         return notificationService.getNotification(id);
     }
 
+    //Get One Notification by Owner
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value = "/owner/{ownerId}", produces = "application/json")
+    public NotificationResponse getNotificationByOwner(@PathVariable String ownerId) {
+        return notificationService.getNotificationByOwner(ownerId);
+    }
+
     // Create Notification
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "/create", consumes = "application/json")

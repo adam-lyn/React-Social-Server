@@ -48,6 +48,19 @@ public class NotificationService {
         return new NotificationResponse(notification);
     }
 
+
+    /**
+     * @param ownerId - Id of notification to be fetched
+     * @return - Response entity representing notification
+     */
+    public NotificationResponse getNotificationByOwner(String ownerId) {
+        Notification notification = notificationRepository.findNotificationByOwnerId(ownerId)
+                .orElseThrow(NotificationByOwnerNotFoundException::new);
+        return new NotificationResponse(notification);
+    }
+
+
+
     /**
      * @param newNotificationRequest - contains notification Type_id of new notification and Other User.
      *

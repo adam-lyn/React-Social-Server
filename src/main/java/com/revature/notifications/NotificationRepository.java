@@ -13,8 +13,8 @@ import java.util.UUID;
 
 @Repository
 public interface NotificationRepository extends CrudRepository<Notification, String> {
-//    @Query("from notifications")
-//    public List<Post> findPostsByGroupId(Group group);
-@Query(value = "select * from notifications where notification_id = 'd5ERictvfpdyQ791YQ3dmnG2jQP2'", nativeQuery = true)
+
     Optional<Notification> findNotificationById(String id);
+
+    Optional<Notification> findNotificationByOwnerId(String owner_id_fk);
 }
