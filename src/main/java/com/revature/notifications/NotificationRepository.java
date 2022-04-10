@@ -16,5 +16,6 @@ public interface NotificationRepository extends CrudRepository<Notification, Str
 
     Optional<Notification> findNotificationById(String id);
 
-    Optional<Notification> findNotificationByOwnerId(String owner_id_fk);
+    Iterable<Notification> findNotificationByOwnerId(String owner_id_fk);
+
 }

@@ -42,10 +42,10 @@ public class NotificationController {
         return notificationService.getNotification(id);
     }
 
-    //Get One Notification by Owner
+    //Get all Notification by Owner
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/owner/{ownerId}", produces = "application/json")
-    public NotificationResponse getNotificationByOwner(@PathVariable String ownerId) {
+    public List<NotificationResponse> getNotificationByOwner(@PathVariable String ownerId) {
         return notificationService.getNotificationByOwner(ownerId);
     }
 

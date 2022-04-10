@@ -53,10 +53,15 @@ public class NotificationService {
      * @param ownerId - Id of notification to be fetched
      * @return - Response entity representing notification
      */
-    public NotificationResponse getNotificationByOwner(String ownerId) {
-        Notification notification = notificationRepository.findNotificationByOwnerId(ownerId)
-                .orElseThrow(NotificationByOwnerNotFoundException::new);
-        return new NotificationResponse(notification);
+    public List<NotificationResponse> getNotificationByOwner(String ownerId) {
+        List<NotificationResponse> notificationResponseList = new ArrayList<>();
+
+        notificationRepository.findNotificationByOwnerId(ownerId).iterator()
+                .forEachRemaining(n -> notificationResponseList.add(new NotificationResponse(n)));
+
+//        Notification notification = notificationRepository.findNotificationByOwnerId(ownerId)
+//                .orElseThrow(NotificationByOwnerNotFoundException::new);
+        return notificationResponseList;
     }
 
 
