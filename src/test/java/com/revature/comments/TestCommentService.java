@@ -3,18 +3,24 @@ package com.revature.comments;
 import com.revature.ReverbApplication;
 import com.revature.comments.Comment;
 import com.revature.comments.CommentService;
+import com.revature.comments.dtos.NewCommentRequest;
+import com.revature.exceptions.ProfileNotFoundException;
 import com.revature.posts.Post;
 import com.revature.comments.CommentRepository;
 import com.revature.posts.PostRepository;
+import com.revature.users.User;
+import com.revature.users.profiles.Profile;
 import com.revature.users.profiles.ProfileRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.util.IdGenerator;
 
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 
@@ -25,6 +31,7 @@ public class TestCommentService {
 	private CommentRepository commentRepository;
 	private PostRepository postRepository;
 	private ProfileRepository profileRepository;
+	private IdGenerator uuid;
 
 	@BeforeEach
 	public void setup() {
@@ -34,13 +41,14 @@ public class TestCommentService {
 		profileRepository = Mockito.mock(ProfileRepository.class);
 	}
 
-	/*
+
 	@Test
 	public void getNumberofCommentsIsNone() {
 		//tests getNumberofComments; new Post has none
 		Post post = new Post();
+		UUID id = UUID.randomUUID();
 
-		Mockito.when(postRepository.findById(8L)).thenReturn(Optional.of(post));
+		Mockito.when(postRepository.findById(id)).thenReturn(Optional.of(post));
 		Mockito.when(commentRepository.findAll()).thenReturn(new ArrayList<Comment>());
 
 		CommentService cs = new CommentService(commentRepository, postRepository,  profileRepository);
@@ -54,38 +62,40 @@ public class TestCommentService {
 		Post post = new Post();
 		Profile profile = new Profile();
 		User user = new User();
-		Comment comment = new Comment();
+		NewCommentRequest comment = new NewCommentRequest();
+		UUID id = UUID.randomUUID();
 
-		Mockito.when(postRepository.findById(8L)).thenReturn(Optional.of(post));
+		Mockito.when(postRepository.findById(id)).thenReturn(Optional.of(post));
 		Mockito.when(commentRepository.findAll()).thenReturn(new ArrayList<Comment>());
 		Mockito.when(profileRepository.getProfileByUser(user)).thenReturn(Optional.of(profile));
 
 		CommentService cs = new CommentService(commentRepository, postRepository,  profileRepository);
 
 		int before = cs.getComments().size();
-		cs.addNewComment(comment, 8L, user);
+		cs.addNewComment(comment, id, user);
 		int after = cs.getComments().size();
 
 		assertEquals(before, after);
 	}
 
-     */
 
-    /*
+
+
 	@Test
 	public void canAddAndDeleteComment() throws ProfileNotFoundException {
 		Post post = new Post();
 		Profile profile = new Profile();
 		User user = new User();
-		Comment comment = new Comment();
+		NewCommentRequest comment = new NewCommentRequest();
+		UUID id = UUID.randomUUID();
 
-		Mockito.when(postRepository.findById(8L)).thenReturn(Optional.of(post));
+		Mockito.when(postRepository.findById(id)).thenReturn(Optional.of(post));
 		Mockito.when(profileRepository.getProfileByUser(user)).thenReturn(Optional.of(profile));
 
 		CommentService cs = new CommentService(commentRepository, postRepository,  profileRepository);
 
 		int before = cs.getComments().size();
-		cs.addNewComment(comment, 8L, user);
+		cs.addNewComment(comment, id, user);
 		// need an actual DB hooked up to delete
 		//cs.deleteComment(comment.getId(), user);
 		int after = cs.getComments().size();
@@ -93,28 +103,32 @@ public class TestCommentService {
 		assertEquals(before, after);
 	}
 
-     */
 
-    /*
+
+
 	@Test
 	public void addNewCommentFailure()
 	{
 		User user = new User();
 		Post post = new Post();
 		Comment comment = new Comment("Test");
+		NewCommentRequest commentReq = new NewCommentRequest();
+		commentReq.setCommentText(comment.getCommentText());
+
+		UUID id = UUID.randomUUID();
 		CommentService cs = new CommentService(commentRepository, postRepository,  profileRepository);
-		Mockito.when(postRepository.findById(99999L)).thenReturn(Optional.empty());
+		Mockito.when(postRepository.findById(id)).thenReturn(Optional.empty());
 		try {
-			cs.addNewComment(comment, (Long)99999L, user);
+			cs.addNewComment(commentReq, id, user);
 		}
 		catch(Exception e)
 		{
 			assertEquals(e.getClass(),IllegalStateException.class);
 		}
 		Mockito.when(profileRepository.getProfileByUser(user)).thenReturn(Optional.empty());
-		Mockito.when(postRepository.findById(99999L)).thenReturn(Optional.of(post));
+		Mockito.when(postRepository.findById(id)).thenReturn(Optional.of(post));
 		try {
-			cs.addNewComment(comment, (Long)99999L, user);
+			cs.addNewComment(commentReq, id, user);
 		}
 		catch(Exception e)
 		{
@@ -122,5 +136,5 @@ public class TestCommentService {
 		}
 	}
 
-     */
+
 }
