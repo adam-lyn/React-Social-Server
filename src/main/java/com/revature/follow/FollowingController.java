@@ -118,7 +118,7 @@ public class FollowingController {
     }
 
     // this method will return FollowerResponse so we can access their name, img_url etc..
-    @GetMapping(path="/getProfileByUserId/{userId}")
+    @GetMapping(path="/getFollowerProfilesByUserId/{userId}")
     public List<FollowerResponse> getFollowerProfilesByUserId(@PathVariable String userId){
         User user = userRepository.findUserById(userId);
         List<User> followers = followingService.getFollowers(user);
@@ -134,6 +134,24 @@ public class FollowingController {
         }
         System.out.println("FOLLOWER RESPONSE PROFILES " + followerProfiles);
         return followerProfiles;
+    };
+
+    @GetMapping(path="/getFollowingProfilesByUserId/{userId}")
+    public List<FollowerResponse> getFollowingProfilesByUserId(@PathVariable String userId){
+        User user = userRepository.findUserById(userId);
+        List<User> followings = followingService.getFollowings(user);
+
+        // for loop to get profile for each user in followers list
+        List<FollowerResponse> followingProfiles = new ArrayList<>();
+        for (User following: followings){
+            System.out.println(following);
+            Profile profile = profileService.findUsersProfile(following);
+            followingProfiles.add(new FollowerResponse(profile.getFirstName(), profile.getLastName(),
+                    profile.getUser().getEmail(), profile.getProfileImg()));
+
+        }
+        System.out.println("FOLLOWER RESPONSE PROFILES " + followingProfiles);
+        return followingProfiles;
     };
 
 }
