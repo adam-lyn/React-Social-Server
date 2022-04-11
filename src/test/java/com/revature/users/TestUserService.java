@@ -39,13 +39,9 @@ public class TestUserService {
             user.setId("2uid");
             user.setEmail("guydood@gmail.com");
 
-
             spiedSut.registerUser(user);
-
             verify(mockUserRepo, times(1)).save(any());
             verify(mockProfileRepo, times(1)).save(any());
-
-
         }
 
 
