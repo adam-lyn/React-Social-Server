@@ -103,4 +103,10 @@ public class FollowingService {
 
     public List<User> getFollowers() {return followRepository.findAll();}
 
+
+    // this method will get profile info using user id
+    public Profile getProfileFromUser(User user) {
+        return profileRepository.getProfileByUser(user).get();
+    }
+
 }
