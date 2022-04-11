@@ -27,8 +27,8 @@ public class TestSearchControllerIntegration {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
     }
 
-    @Test
-    public void test_queryByString_() {
-
-    }
+//    @Test
+//    public void test_queryByString_() {
+//
+//    }
 }

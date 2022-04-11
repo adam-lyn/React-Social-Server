@@ -16,7 +16,8 @@ public class SearchService {
 
     Logger logger = LoggerFactory.getLogger(SearchService.class);
 
-    private final SearchCache searchCache;
+    private final SearchCache userSearchCache;
+    private final SearchCache groupSearchCache;
     private final UserRepository userRepository;
     private final GroupRepository groupRepository;
 
@@ -24,29 +25,31 @@ public class SearchService {
     public SearchService(UserRepository userRepository, GroupRepository groupRepository) {
         this.userRepository = userRepository;
         this.groupRepository = groupRepository;
-        this.searchCache = new SearchCache();
+        this.userSearchCache = new SearchCache();
+        this.groupSearchCache = new SearchCache();
     }
 
     public SearchResponse userQuery(String query) {
-        if (searchCache.contains(query)) {
+        if (userSearchCache.contains(query)) {
             logger.info("Cache HIT for valid bucket containing SearchResponse for query: {}", query);
-            return searchCache.get(query);
+            return userSearchCache.get(query);
         }
         Stream<Searchable> userSearch = userRepository.findByEmailContains(query).stream();
         SearchResponse response = new SearchResponse(userSearch.collect(Collectors.toList()));
-        searchCache.put(query, response);
-        return searchCache.get(query);
+        userSearchCache.put(query, response);
+        return userSearchCache.get(query);
     }
 
+
     public SearchResponse groupQuery(String query) {
-        if (searchCache.contains(query)) {
+        if (groupSearchCache.contains(query)) {
             logger.info("Cache HIT for valid bucket containing SearchResponse for query: {}", query);
-            return searchCache.get(query);
+            return groupSearchCache.get(query);
         }
         Stream<Searchable> groupSearch = groupRepository.findByNameContains(query).stream();
         SearchResponse response = new SearchResponse(groupSearch.collect(Collectors.toList()));
-        searchCache.put(query, response);
-        return searchCache.get(query);
+        groupSearchCache.put(query, response);
+        return groupSearchCache.get(query);
     }
 
 //    public SearchResponse query2(String query) {
