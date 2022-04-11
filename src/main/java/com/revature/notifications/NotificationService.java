@@ -59,8 +59,6 @@ public class NotificationService {
         notificationRepository.findNotificationByOwnerId(ownerId).iterator()
                 .forEachRemaining(n -> notificationResponseList.add(new NotificationResponse(n)));
 
-//        Notification notification = notificationRepository.findNotificationByOwnerId(ownerId)
-//                .orElseThrow(NotificationByOwnerNotFoundException::new);
         return notificationResponseList;
     }
 
