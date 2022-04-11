@@ -2,8 +2,8 @@ package com.revature.notifications;
 
 import com.revature.exceptions.*;
 import com.revature.notifications.dtos.NewNotificationRequest;
-import com.revature.notifications.dtos.NewNotificationResponse;
 import com.revature.notifications.dtos.NotificationResponse;
+import com.revature.users.User;
 import com.revature.users.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -70,26 +70,30 @@ public class NotificationService {
      * @param newNotificationRequest - contains notification Type_id of new notification and Other User.
      *
      */
-    public NewNotificationResponse createNotification(NewNotificationRequest newNotificationRequest) {
+    public void createNotification(NewNotificationRequest newNotificationRequest, User user) {
 
         if (!notNullOrEmpty.test(newNotificationRequest.getType_id().toString()))
             throw new InvalidRequestException("Invalid notification type entered");
-        if (!notNullOrEmpty.test(newNotificationRequest.getOtherUser().toString()))
+        if (!notNullOrEmpty.test(newNotificationRequest.getOtherUserId()))
             throw new InvalidRequestException("Invalid notification Other User entered");
-        System.out.println("here 1");
         Notification newNotification = new Notification();
-        System.out.println("here 2");
 
         newNotification.setId(UUID.randomUUID().toString());
-        newNotification.setOwner(newNotificationRequest.getOwner());
+        newNotification.setIsRead(false);
+
+        User owner = userRepository.getById(user.getId());
+        newNotification.setOwner(owner);
+        System.out.println(owner);
+
         newNotification.setType_id(newNotificationRequest.getType_id());
-        newNotification.setOtherUser(newNotificationRequest.getOtherUser());
+
+        User otherUser = userRepository.getById(newNotificationRequest.getOtherUserId());
+        newNotification.setOtherUser(otherUser);
+        System.out.println(otherUser);
+
         newNotification.setDate(LocalDateTime.now());
-        //TODO: maybe generate timestamp here?
-        NewNotificationResponse tasdt = new NewNotificationResponse(notificationRepository.save(newNotification));
-        System.out.println(tasdt);
-        System.out.println("here 3");
-        return new NewNotificationResponse(notificationRepository.save(newNotification));
+
+        notificationRepository.save(newNotification);
     }
 
     public void deleteNotification(String notificationId) {

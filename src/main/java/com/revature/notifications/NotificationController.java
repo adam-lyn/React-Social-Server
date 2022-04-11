@@ -1,20 +1,13 @@
 package com.revature.notifications;
 
-import com.revature.groups.GroupService;
-import com.revature.groups.dtos.GroupCreationRequest;
-import com.revature.groups.dtos.GroupResponse;
 import com.revature.notifications.dtos.NewNotificationRequest;
-import com.revature.notifications.dtos.NewNotificationResponse;
 import com.revature.notifications.dtos.NotificationResponse;
 import com.revature.users.User;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/notification")
@@ -52,12 +45,9 @@ public class NotificationController {
     // Create Notification
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "/create", consumes = "application/json")
-    public NewNotificationResponse createNotification(
-            @RequestBody NewNotificationRequest newNotificationRequest) {
-        System.out.println("whole thing" + newNotificationRequest);
-        System.out.println("Type Id" + newNotificationRequest.getType_id());
-        System.out.println("other user" + newNotificationRequest.getOtherUser());
-        return notificationService.createNotification(newNotificationRequest);
+    public void createNotification(@RequestBody NewNotificationRequest newNotificationRequest, @AuthenticationPrincipal User user) {
+
+        notificationService.createNotification(newNotificationRequest, user);
     }
 
     // delete notification

@@ -27,6 +27,9 @@ public class Notification {
 //    @Type(type = "uuid-char")
     private String id;
 
+    @Column(name = "is_read")
+    private Boolean isRead;
+
     @ManyToOne
     @JoinColumn(name = "owner_id_fk", referencedColumnName = "user_id")
     private User owner;

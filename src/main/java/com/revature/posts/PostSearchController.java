@@ -9,6 +9,7 @@ import com.revature.posts.PostService;
 
 @RestController
 @RequestMapping(path = "api/search")
+@CrossOrigin
 public class PostSearchController {
 	private final PostService postService;
 	

@@ -9,10 +9,9 @@ import java.sql.Timestamp;
 @Data
 public class NewNotificationRequest {
     //user getting notified, other user, type, timestamp
-    private User owner;
-    private User otherUser;
-    //TODO is this supposed to be of type string instead of NotificationType?
+
+    private String otherUserId;
     private NotificationType type_id;
-    private Timestamp timestamp;
+
 
 }

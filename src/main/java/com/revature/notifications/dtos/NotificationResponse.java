@@ -11,6 +11,7 @@ import java.util.UUID;
 @Data
 public class NotificationResponse {
     private String id;
+    private Boolean isRead;
     private User owner;
     private NotificationType type_id;
     private LocalDateTime date;
@@ -18,6 +19,7 @@ public class NotificationResponse {
 
     public NotificationResponse(Notification notification) {
         this.id = notification.getId();
+        this.isRead = notification.getIsRead();
         this.owner = notification.getOwner();
         this.type_id = notification.getType_id();
         this.date = notification.getDate();
@@ -27,8 +29,9 @@ public class NotificationResponse {
 
     @Override
     public String toString() {
-        return "NotificationResponse{" +
+        return "NewNotificationResponse{" +
                 "id='" + id + '\'' +
+                ", isRead=" + isRead +
                 ", owner=" + owner +
                 ", type_id=" + type_id +
                 ", date=" + date +
