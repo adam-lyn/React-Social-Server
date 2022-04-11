@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/userSettings")
+@CrossOrigin
 public class UserSettingsController {
 
     private final UserSettingsService userSettingsService;

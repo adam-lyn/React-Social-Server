@@ -1,6 +1,6 @@
 package com.revature.notifications.notificationType;
 
-import com.revature.exceptions.NotificationNotFoundExeption;
+import com.revature.exceptions.NotificationNotFoundException;
 import com.revature.notifications.Notification;
 
 import javax.persistence.*;
@@ -39,7 +39,7 @@ public class NotificationType {
                 this.id = "2";
                 break;
             default:
-                throw new NotificationNotFoundExeption();
+                throw new NotificationNotFoundException();
         }
         this.typeName = typeName;
     }
