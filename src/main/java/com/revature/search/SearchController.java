@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = {"http://reverb-ui-bucket.s3-website-us-west-1.amazonaws.com"})
+@CrossOrigin
 @RequestMapping(path = "/api/search")
 public class SearchController {
 
@@ -21,4 +21,8 @@ public class SearchController {
         return searchService.userQuery(query);
     }
 
+    @GetMapping("/group")
+    public SearchResponse queryByStringGroup(@RequestParam(name = "query", required = true) String query) {
+        return searchService.groupQuery(query);
+    }
 }
