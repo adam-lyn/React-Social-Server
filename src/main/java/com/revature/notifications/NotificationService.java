@@ -90,6 +90,7 @@ public class NotificationService {
 
         newNotification.setDate(LocalDateTime.now());
 
+        System.out.println(newNotification);
         notificationRepository.save(newNotification);
     }
 
