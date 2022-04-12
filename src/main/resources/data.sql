@@ -1,3 +1,7 @@
+insert into notification_type values
+	(1, 'like'),
+	(2, 'comment');
+
 insert into users (user_id, EMAIL) values ('e3mkyWLcXnY0KpKwK8WBtHxJvn72', 'dev@dev.com');
 insert into user_profile (ID, ABOUT_ME, BIRTHDAY, FIRST_NAME, HEADER_IMG, HOBBY, LAST_NAME, LOCATION, PROFILE_IMG, USER_ID_fk)
 values ('11585e78-9f20-4377-9aff-ed992fe8c4a3', 'I just joined Reverb!', 'A Mystery...', 'Developer', 'https://www.windowslatest.com/wp-content/uploads/2017/10/Windows-XP-min.jpg',
