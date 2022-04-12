@@ -1,5 +1,6 @@
 package com.revature.users.profiles;
 
+import com.revature.users.UserRepository;
 import com.revature.users.UserService;
 import com.revature.users.dtos.ProfileRequest;
 import com.revature.users.dtos.ProfileResponse;
@@ -20,10 +21,12 @@ import java.util.UUID;
 public class ProfileController {
 
 	private final ProfileService profileService;
+	private final UserRepository userRepository;
 
 
-	public ProfileController(ProfileService profileService) {
+	public ProfileController(ProfileService profileService, UserRepository userRepository) {
 		this.profileService = profileService;
+		this.userRepository = userRepository;
 	}
 
 	/*
@@ -50,7 +53,25 @@ public class ProfileController {
 		try {
 			User query = new User();
 			query.setId(id);
-			return ResponseEntity.ok(new ProfileResponse(profileService.findUsersProfile(query)));
+
+			User theUser = userRepository.findUserById(id);
+			System.out.println("\n This is the user: \n " + theUser);
+
+			System.out.println("\n This is the profile \n " + profileService.findUsersProfile(query));
+			ProfileResponse profileResponse = new ProfileResponse(profileService.findUsersProfile(query));
+
+			System.out.println("\n Here is (hopefully) the list of followers: \n" + theUser.getFollower());
+
+		/*	if(profileResponse.getFollower_num() > 0) {
+				for (int i = 0; i < profileResponse.getFollower_num(); i++) {
+					System.out.println(theUser.getFollower());
+					System.out.println(theUser.getFollower().get(i));
+					Profile followerProfile = profileService.findUsersProfile(theUser.getFollower().get(i));
+					profileResponse.setFollowers(followerProfile);
+				}
+			} */
+
+			return ResponseEntity.ok(profileResponse);
 		} catch (UserNotFoundException e) {
 			//e.printStackTrace();
 			return ResponseEntity.status(404).build();

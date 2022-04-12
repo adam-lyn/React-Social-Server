@@ -47,6 +47,8 @@ public class FollowingService {
 
     //TODO: Get list of followers given a specific user id
     public List<User> getFollowers(User user) {
+        System.out.printf("Getting followers: ");
+        System.out.println(user.getFollower());
         return user.getFollower();
     }
 
@@ -100,5 +102,11 @@ public class FollowingService {
 
 
     public List<User> getFollowers() {return followRepository.findAll();}
+
+
+    // this method will get profile info using user id
+    public Profile getProfileFromUser(User user) {
+        return profileRepository.getProfileByUser(user).get();
+    }
 
 }

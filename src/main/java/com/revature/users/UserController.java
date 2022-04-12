@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-                    // TODO are these necessary? cors seems to be managed in SecurityConfiguration
+@CrossOrigin                    // TODO are these necessary? cors seems to be managed in SecurityConfiguration
 @RequestMapping("/api/user")
 public class UserController {
 
@@ -27,6 +27,7 @@ public class UserController {
     does not currently exist in the cloud database, the user is created and added to it. */
     @PostMapping(path = "/login")
     public ResponseEntity<User> loginUser(@AuthenticationPrincipal User user) {
+        System.out.println("THE USER IS: " +user);
         userService.loginUser(user);
         return ResponseEntity.ok(user);
     }
@@ -35,6 +36,7 @@ public class UserController {
     /* Registers a new user, only requires a Token in the header, no body is required at the moment */
     @PostMapping(path = "/register")
     public ResponseEntity<String> registerUser(@AuthenticationPrincipal User user) {
+        System.out.println("THE USER IS: " +user);
         userService.registerUser(user);
         return ResponseEntity.ok("Successfully created user with email " + user.getEmail());
     }

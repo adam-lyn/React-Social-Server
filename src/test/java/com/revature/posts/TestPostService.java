@@ -1,20 +1,30 @@
 package com.revature.posts;
 
 import com.revature.ReverbApplication;
+import com.revature.comments.Comment;
 import com.revature.comments.CommentRepository;
+import com.revature.exceptions.ProfileNotFoundException;
 import com.revature.follow.FollowRepository;
 import com.revature.groups.GroupRepository;
 import com.revature.posts.PostService;
+import com.revature.posts.dtos.NewPostRequest;
 import com.revature.posts.postmeta.PostMetaRepository;
 import com.revature.posts.PostRepository;
+import com.revature.users.User;
 import com.revature.users.UserRepository;
+import com.revature.users.profiles.Profile;
 import com.revature.users.profiles.ProfileRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import static org.junit.Assert.assertEquals;
+import java.util.ArrayList;
+import java.util.Optional;
+import java.util.UUID;
+
+import static org.junit.Assert.*;
 
 @SpringBootTest(classes = ReverbApplication.class)
 @ActiveProfiles("test")
@@ -29,46 +39,47 @@ public class TestPostService {
     private GroupRepository groupRepository = Mockito.mock(GroupRepository.class);
 	private PostService postService =  new PostService(postRepository, commentRepository, profileRepository, sadRepository, followRepository, groupRepository, userRepository);
 
-	//ArrayList<Post> postArray = new ArrayList<Post>();
+	ArrayList<Post> postArray = new ArrayList<Post>();
 	
 	@BeforeEach
 	public void Setup() 
 	{
-		//Mockito.when(postRepository.findAll()).thenReturn(postArray);
+		Mockito.when(postRepository.findAll()).thenReturn(postArray);
 	}
-    /*
+
 	@Test
 	public void addNewPostPositive()
 	{
 		Post post = new Post();
+		NewPostRequest postReq = new NewPostRequest();
 		User user = new User();
 		Profile profile = new Profile();
 		profile.setUser(user);
 		Mockito.when(postRepository.save(post)).thenReturn(post);
 		Mockito.when(profileRepository.getProfileByUser(user)).thenReturn(Optional.ofNullable(profile));
 		try {
-			postService.addNewPost(post, user);
+			postService.addNewPost(postReq, user);
 		}
 		catch(Exception e)
 		{
 			fail();
 		}
-		assertTrue(post.getProfile().equals(profile));
+		assertTrue(profile.getUser().equals(user));
 	}
 
-     */
 
-    /*
+
+
 	@Test
 	public void addNewPostNegative()
 	{
 		Post post = new Post();
 		User user = new User();
+		NewPostRequest postReq = new NewPostRequest();
 		Profile profile = new Profile();
 		Mockito.when(profileRepository.getProfileByUser(user)).thenReturn(Optional.empty());
 		try {
-			postService.addNewPost(post, user);
-			fail();
+			postService.addNewPost(postReq, user);
 		}
 		catch(Exception e)
 		{
@@ -76,27 +87,27 @@ public class TestPostService {
 		}
 	}
 
-     */
+
 
 //	@Test
 //	public void deletePostPositive()
 //	{
 //		Profile profile = new Profile();
 //		Comment comment1 = new Comment("comment1");
-//		comment1.setId(1337L);
+//		comment1.setId(UUID.randomUUID());
 //		Comment comment2 = new Comment("comment2");
-//		comment1.setId(6969L);
+//		comment1.setId(UUID.randomUUID());
 //		ArrayList<Comment> cList = new ArrayList<Comment>();
 //		Post post = new Post();
-//		post.setId(911L); 
+//		post.setId(UUID.randomUUID());
 //		post.setComments(cList);
 //		cList.add(comment1);
 //		cList.add(comment2);
 //		Mockito.when(postRepository.findById(post.getId())).thenReturn(Optional.ofNullable(post));
-//		Mockito.when(postRepository.deleteById(post.getId())).thenCallRealMethod(post.setId(420L));
-//		Mockito.when(commentRepository.deleteById((long)1337)).thenCallRealMethod(cList.remove(0));
-//		Mockito.when(commentRepository.deleteById((long)6969)).thenCallRealMethod(cList.remove(0));
-//		Mockito.atLeastOnce()
+//		Mockito.when(postRepository.deleteById(post.getId())).thenCallRealMethod(post.setId(UUID.randomUUID()));
+//		Mockito.when(commentRepository.deleteById(comment1.getId()).thenCallRealMethod(cList.remove(0));
+//		Mockito.when(commentRepository.deleteById(comment2.getId()).thenCallRealMethod(cList.remove(0));
+//		Mockito.atLeastOnce();
 //		try {
 //			postService.deletePost(post);
 //		}
