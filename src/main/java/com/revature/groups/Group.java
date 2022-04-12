@@ -29,6 +29,7 @@ public class Group implements Searchable {
 
     @ManyToOne
     @JoinColumn(name = "owner_id_fk", referencedColumnName = "user_id")
+    @ToString.Exclude
     private User owner;
 
     @Column(nullable = false, unique = true)

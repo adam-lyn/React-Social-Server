@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/group")
+@CrossOrigin
 public class GroupController {
 
     private GroupService groupService;
