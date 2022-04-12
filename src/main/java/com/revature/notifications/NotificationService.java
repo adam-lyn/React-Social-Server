@@ -3,6 +3,7 @@ package com.revature.notifications;
 import com.revature.exceptions.*;
 import com.revature.notifications.dtos.NewNotificationRequest;
 import com.revature.notifications.dtos.NotificationResponse;
+import com.revature.notifications.dtos.SetNotificationsReadRequest;
 import com.revature.users.User;
 import com.revature.users.UserRepository;
 import org.springframework.stereotype.Service;
@@ -81,17 +82,21 @@ public class NotificationService {
 
         User owner = userRepository.getById(user.getId());
         newNotification.setOwner(owner);
-        System.out.println(owner);
 
         newNotification.setType_id(newNotificationRequest.getType_id());
 
         User otherUser = userRepository.getById(newNotificationRequest.getOtherUserId());
         newNotification.setOtherUser(otherUser);
-        System.out.println(otherUser);
 
         newNotification.setDate(LocalDateTime.now());
 
         notificationRepository.save(newNotification);
+    }
+
+    public void setNotificationToRead(SetNotificationsReadRequest request) {
+        for (String id : request.getNotificationIds()) {
+            notificationRepository.setAsRead(id);
+        }
     }
 
     public void deleteNotification(String notificationId) {

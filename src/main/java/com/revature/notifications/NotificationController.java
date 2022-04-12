@@ -2,6 +2,7 @@ package com.revature.notifications;
 
 import com.revature.notifications.dtos.NewNotificationRequest;
 import com.revature.notifications.dtos.NotificationResponse;
+import com.revature.notifications.dtos.SetNotificationsReadRequest;
 import com.revature.users.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -48,6 +49,12 @@ public class NotificationController {
     public void createNotification(@RequestBody NewNotificationRequest newNotificationRequest, @AuthenticationPrincipal User user) {
 
         notificationService.createNotification(newNotificationRequest, user);
+    }
+
+    // Set notification to read
+    @PutMapping(value="/read")
+    public void setNotificationsToRead(@RequestBody SetNotificationsReadRequest request) {
+        notificationService.setNotificationToRead(request);
     }
 
     // delete notification
